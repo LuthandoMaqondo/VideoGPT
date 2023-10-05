@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def parse_requirements(filename):
     lines = (line.strip() for line in open(filename))
@@ -6,9 +6,9 @@ def parse_requirements(filename):
 
 setup(name='VideoGPT', version='1.0',
       description='PyTorch package for VideoGPT',
-      url='http://github.com/wilson1yan/VideoGPT',
-      author='Wilson Yan',
-      author_email='wilson1.yan@berkeley.edu',
+      url='http://github.com/LuthandoMaqondo/VideoGPT',
+      author='Luthando Maqondo',
+      author_email='luthando@appimate.com',
       license='BSD',
       packages=['videogpt'],
       install_requires=parse_requirements('requirements.txt'),
