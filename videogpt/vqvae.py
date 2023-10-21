@@ -48,26 +48,12 @@ class VQVAE(pl.LightningModule):
         return self.decoder(h)
 
     def forward(self, x):
-        # z = self.pre_vq_conv(self.encoder(x))
-        # vq_output = self.codebook(z)
-        # x_recon = self.decoder(self.post_vq_conv(vq_output['embeddings']))
-        # recon_loss = F.mse_loss(x_recon, x) / 0.06
-        # return recon_loss, x_recon, vq_output
+        z = self.pre_vq_conv(self.encoder(x))
+        vq_output = self.codebook(z)
+        x_recon = self.decoder(self.post_vq_conv(vq_output['embeddings']))
+        recon_loss = F.mse_loss(x_recon, x) / 0.06
 
-        print("Input shape:", x.shape)
-        z = self.encoder(x) # Encoder step
-        print("Encoder output", z.shape)
-        quant_input = self.pre_vq_conv(z)
-        print("Pre VQ", quant_input.shape)
-        quantized = self.codebook(z)
-        print("Quantized", quantized.shape)
-        dec_input = self.post_vq_conv(quantized)
-        print("Decoder input", quantized.shape)
-        reconstruction = self.decoder(dec_input) # Decoder step
-        print("reconstruction:", reconstruction.shape)
-        recon_loss = F.mse_loss(reconstruction, x) / 0.06
-
-        return recon_loss, reconstruction, quantized
+        return recon_loss, x_recon, vq_output
 
     def training_step(self, batch, batch_idx):
         x = batch['video']
